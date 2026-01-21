@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ห้องเรียนธรรมชาติ: ป่าโกงกาง ม.อ.ปัตตานี</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Chosen Palette: Earth & Sea Harmony
+         Background: Warm Neutral (Stone-50/100)
+         Primary Text: Dark Slate (Slate-800)
+         Accents: Forest Green (Emerald-700) for nature, Deep Ocean (Cyan-800) for water, Alert Red (Rose-600) for threats.
+    -->
+
+    <style>
+        body {
+            font-family: 'Sarabun', sans-serif;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .nav-active {
+            border-bottom: 2px solid #047857; /* Emerald-700 */
+            color: #047857;
+        }
+        /* Custom scrollbar for clean look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d1d5db;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #9ca3af;
+        }
+        .fade-in { animation: fadeIn 0.5s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+  <meta name="google-site-verification" content="7Y9WmjnXYCE_fCFu4Hq_yga0C_3h56aKyTmRdOc3GA4" />
+</head>
+<body class="bg-stone-50 text-slate-800 leading-relaxed">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-md shadow-sm z-50">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="text-xl font-bold text-emerald-800 tracking-wide">🌳 PSU Mangrove</div>
+                <div class="hidden md:flex space-x-8 text-sm font-medium text-slate-600">
+                    <button onclick="scrollToSection('home')" class="hover:text-emerald-700 transition">หน้าหลัก</button>
+                    <button onclick="scrollToSection('ecosystem')" class="hover:text-emerald-700 transition">ระบบนิเวศ</button>
+                    <button onclick="scrollToSection('threats')" class="hover:text-emerald-700 transition">ภัยคุกคาม</button>
+                    <button onclick="scrollToSection('database')" class="hover:text-emerald-700 transition">พรรณไม้และสัตว์</button>
+                    <button onclick="scrollToSection('feedback')" class="hover:text-emerald-700 transition font-bold">ความคิดเห็น</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header id="home" class="pt-32 pb-20 px-4 bg-gradient-to-b from-emerald-50 to-stone-50">
+        <div class="max-w-4xl mx-auto text-center">
+            <span class="inline-block py-1 px-3 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold mb-4 tracking-wider">PROJECT: ป่าในเมือง</span>
+            <h1 class="text-4xl md:text-6xl font-bold text-slate-900 mb-6 leading-tight">
+                ห้องเรียนธรรมชาติ <br>
+                <span class="text-emerald-700">ใต้เงาโกงกาง ม.อ.ปัตตานี</span>
+            </h1>
+            <p class="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto mb-10">
+                มากกว่าพื้นที่สีเขียว แต่คือปราการด่านสุดท้ายที่เชื่อมโยง ทะเล พืช และสัตว์ เข้าด้วยกันอย่างมหัศจรรย์
+            </p>
+            <div class="flex justify-center gap-4">
+                <button onclick="scrollToSection('ecosystem')" class="bg-emerald-700 hover:bg-emerald-800 text-white px-8 py-3 rounded-full font-semibold transition shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                    สำรวจระบบนิเวศ
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Section 1: Ecosystem Services -->
+    <section id="ecosystem" class="py-16 px-4 bg-white">
+        <div class="max-w-5xl mx-auto">
+            <div class="mb-12 text-center max-w-3xl mx-auto">
+                <h2 class="text-3xl font-bold text-slate-900 mb-4">ทำไมต้องป่าโกงกาง?</h2>
+                <p class="text-slate-600 text-balance">
+                    ระบบนิเวศป่าโกงกางทำหน้าที่เป็นโครงสร้างพื้นฐานทางธรรมชาติที่สำคัญ หรือ "ผู้ให้บริการทางระบบนิเวศ" (Ecosystem Services) โดยกราฟใยแมงมุมด้านล่างนี้ได้จำลองศักยภาพใน 5 มิติหลัก ได้แก่ การเป็นแหล่งอนุบาลสัตว์น้ำวัยอ่อน การบำบัดน้ำเสียทางชีวภาพ การเป็นแนวป้องกันการกัดเซาะชายฝั่ง การเป็นแหล่งอาหารหมุนเวียน และการรักษาความหลากหลายทางชีวภาพ ซึ่งช่วยเปลี่ยนข้อมูลเชิงลึกให้เป็นภาพรวมที่สะท้อนว่าพื้นที่แห่งนี้ไม่ใช่เพียงป่าไม้ที่อยู่นิ่ง แต่เป็นระบบที่มีชีวิตซึ่งคอยปกป้องและค้ำจุนสมดุลระหว่างเมืองและธรรมชาติอย่างยั่งยืน
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6">
+                    <div class="bg-emerald-50 p-6 rounded-xl border border-emerald-100 hover:shadow-md transition">
+                        <h3 class="font-bold text-xl text-emerald-900 flex items-center mb-2">
+                            <span class="text-2xl mr-3">🏠</span> แหล่งอนุบาลสัตว์น้ำ
+                        </h3>
+                        <p class="text-sm text-slate-700">รากที่ซับซ้อนทำหน้าที่เป็นบ้านที่ปลอดภัยสำหรับลูกปลา ปู และกุ้ง ในวัยอ่อน</p>
+                    </div>
+                    <div class="bg-cyan-50 p-6 rounded-xl border border-cyan-100 hover:shadow-md transition">
+                        <h3 class="font-bold text-xl text-cyan-900 flex items-center mb-2">
+                            <span class="text-2xl mr-3">💧</span> เครื่องบำบัดน้ำธรรมชาติ
+                        </h3>
+                        <p class="text-sm text-slate-700">ระบบรากช่วยกรองของเสียและตะกอนก่อนที่น้ำจะไหลลงสู่ทะเล</p>
+                    </div>
+                    <div class="bg-stone-50 p-6 rounded-xl border border-stone-200 hover:shadow-md transition">
+                        <h3 class="font-bold text-xl text-stone-900 flex items-center mb-2">
+                            <span class="text-2xl mr-3">🛡️</span> ปราการป้องกัน
+                        </h3>
+                        <p class="text-sm text-slate-700">ช่วยป้องกันการกัดเซาะชายฝั่งและเป็นด่านหน้าปะทะมรสุม</p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl shadow-lg border border-slate-100">
+                    <h4 class="text-center font-semibold text-slate-500 mb-4 text-sm">ดัชนีศักยภาพทางนิเวศวิทยา (Conceptual Score)</h4>
+                    <div class="chart-container">
+                        <canvas id="ecosystemRadarChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 2: Connection Grid -->
+    <section class="py-16 px-4 bg-stone-100">
+        <div class="max-w-5xl mx-auto">
+            <div class="mb-10 text-center">
+                <h2 class="text-3xl font-bold text-slate-900 mb-4">ความเชื่อมโยงที่แยกขาดไม่ได้</h2>
+                <p class="text-slate-600 max-w-2xl mx-auto">
+                    คลิกที่องค์ประกอบด้านล่างเพื่อเรียนรู้ความสัมพันธ์ระหว่าง ทะเล พืช และสัตว์ ที่ร่วมกันขับเคลื่อนระบบนิเวศนี้
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <button onclick="updateConnection('sea')" class="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition text-left border-b-4 border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-300 group">
+                    <div class="text-4xl mb-4 group-hover:scale-110 transition-transform">🌊</div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">ทะเล (Sea)</h3>
+                    <p class="text-slate-500 text-sm">จุดเริ่มต้นและแหล่งกำเนิด</p>
+                </button>
+
+                <button onclick="updateConnection('plant')" class="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition text-left border-b-4 border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-300 group">
+                    <div class="text-4xl mb-4 group-hover:scale-110 transition-transform">🌿</div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">พืช (Plants)</h3>
+                    <p class="text-slate-500 text-sm">ผู้ผลิตและผู้ปกป้อง</p>
+                </button>
+
+                <button onclick="updateConnection('animal')" class="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition text-left border-b-4 border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-300 group">
+                    <div class="text-4xl mb-4 group-hover:scale-110 transition-transform">🦀</div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">สัตว์ (Animals)</h3>
+                    <p class="text-slate-500 text-sm">ผู้รักษาสมดุล</p>
+                </button>
+            </div>
+
+            <div id="connectionDetail" class="mt-8 p-8 bg-white rounded-2xl shadow-inner border border-stone-200 text-center min-h-[150px] flex items-center justify-center flex-col">
+                <p class="text-slate-400 italic">เลือกหัวข้อด้านบนเพื่อดูรายละเอียดความสัมพันธ์</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 3: Threats -->
+    <section id="threats" class="py-16 px-4 bg-white relative overflow-hidden">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-12">
+                <div class="inline-block bg-rose-100 text-rose-700 px-3 py-1 rounded text-xs font-bold mb-4">CRISIS ALERT</div>
+                <h2 class="text-3xl font-bold text-slate-900 mb-4">ภัยคุกคาม: ขยะและผลกระทบลูกโซ่</h2>
+                <p class="text-slate-600">
+                    ปัญหาหลักที่ป่าโกงกางต้องเผชิญคือ "ขยะ" ที่พัดมากับน้ำทะเล ส่วนนี้แสดงให้เห็นถึงกระบวนการที่ขยะส่งผลกระทบต่อสิ่งมีชีวิตในแต่ละลำดับขั้น ตั้งแต่การขัดขวางการหายใจของพืช ไปจนถึงการย้อนกลับมาทำร้ายมนุษย์
+                </p>
+            </div>
+
+            <div class="bg-slate-50 rounded-2xl p-6 md:p-10 shadow-sm border border-slate-200">
+                <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
+                    <button onclick="showThreat(1)" class="threat-step flex flex-col items-center p-4 w-full md:w-1/4 rounded-lg hover:bg-white hover:shadow-md transition cursor-pointer border border-transparent focus:border-rose-300">
+                        <span class="text-3xl mb-2">🗑️</span>
+                        <span class="font-bold text-sm text-slate-700">1. ขยะทะเล</span>
+                    </button>
+                    <div class="hidden md:block text-slate-300 text-xl">➔</div>
+                    <button onclick="showThreat(2)" class="threat-step flex flex-col items-center p-4 w-full md:w-1/4 rounded-lg hover:bg-white hover:shadow-md transition cursor-pointer border border-transparent focus:border-rose-300">
+                        <span class="text-3xl mb-2">🚫</span>
+                        <span class="font-bold text-sm text-slate-700">2. รากอุดตัน</span>
+                    </button>
+                    <div class="hidden md:block text-slate-300 text-xl">➔</div>
+                    <button onclick="showThreat(3)" class="threat-step flex flex-col items-center p-4 w-full md:w-1/4 rounded-lg hover:bg-white hover:shadow-md transition cursor-pointer border border-transparent focus:border-rose-300">
+                        <span class="text-3xl mb-2">🦠</span>
+                        <span class="font-bold text-sm text-slate-700">3. สารพิษ</span>
+                    </button>
+                    <div class="hidden md:block text-slate-300 text-xl">➔</div>
+                    <button onclick="showThreat(4)" class="threat-step flex flex-col items-center p-4 w-full md:w-1/4 rounded-lg hover:bg-white hover:shadow-md transition cursor-pointer border border-transparent focus:border-rose-300">
+                        <span class="text-3xl mb-2">🍽️</span>
+                        <span class="font-bold text-sm text-slate-700">4. สู่มนุษย์</span>
+                    </button>
+                </div>
+
+                <div id="threatDisplay" class="bg-white p-6 rounded-xl border-l-4 border-rose-500 shadow-sm">
+                    <h4 class="text-lg font-bold text-rose-700 mb-2">คลิกที่ขั้นตอนด้านบน</h4>
+                    <p class="text-slate-600 text-sm">เพื่อดูรายละเอียดผลกระทบที่เกิดขึ้นในแต่ละขั้นตอนของวงจรขยะ</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 4: Solutions -->
+    <section id="solutions" class="py-16 px-4 bg-emerald-900 text-emerald-50">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-white mb-4">การฟื้นฟูและการเรียนรู้สู่ความยั่งยืน</h2>
+                <p class="text-emerald-200 max-w-2xl mx-auto">
+                    เป้าหมายของโครงการคือการเปลี่ยนพื้นที่ให้เป็นแหล่งเรียนรู้ที่มีชีวิต โดยใช้ "เทคโนโลยีสารสนเทศ" (Information Management) เชื่อมโยงข้อมูลสู่การปฏิบัติจริง
+                </p>
+            </div>
+
+            <div class="bg-white/10 backdrop-blur-sm rounded-3xl p-1">
+                <div class="grid grid-cols-2 gap-1 mb-6">
+                    <button onclick="switchSolution('physical')" id="btn-physical" class="py-3 rounded-2xl text-sm font-bold transition-all bg-emerald-500 text-white shadow-lg">
+                        1. การฟื้นฟูเชิงกายภาพ
+                    </button>
+                    <button onclick="switchSolution('digital')" id="btn-digital" class="py-3 rounded-2xl text-sm font-bold transition-all text-emerald-200 hover:bg-white/5">
+                        2. การเรียนรู้เชิงดิจิทัล
+                    </button>
+                </div>
+
+                <div class="p-6 md:p-8 min-h-[300px] flex items-center">
+                    <div id="content-physical" class="w-full">
+                        <div class="flex flex-col md:flex-row items-center gap-8">
+                            <div class="md:w-1/2">
+                                <div class="bg-white/90 p-6 rounded-2xl text-emerald-900 shadow-xl">
+                                    <h3 class="text-2xl font-bold mb-4 flex items-center">🧹 อาสาสมัครพิทักษ์ป่า</h3>
+                                    <p class="mb-4">การลงพื้นที่จริงเพื่อเก็บขยะที่พัดมากับน้ำและขยะตกค้างในรากโกงกาง เป็นการแก้ปัญหาที่ปลายเหตุแต่จำเป็นอย่างยิ่งเพื่อคืนลมหายใจให้พืช</p>
+                                    <ul class="space-y-2 text-sm">
+                                        <li class="flex items-center">✓ คืนทัศนียภาพที่สะอาดตา</li>
+                                        <li class="flex items-center">✓ ลดปริมาณพลาสติกในระบบนิเวศ</li>
+                                        <li class="flex items-center">✓ สร้างจิตสำนึกสาธารณะ</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="md:w-1/2 text-center text-9xl opacity-80">🧤</div>
+                        </div>
+                    </div>
+
+                    <div id="content-digital" class="w-full hidden">
+                        <div class="flex flex-col md:flex-row items-center gap-8">
+                            <div class="md:w-1/2 order-2 md:order-1 text-center text-9xl opacity-80">📱</div>
+                            <div class="md:w-1/2 order-1 md:order-2">
+                                <div class="bg-white/90 p-6 rounded-2xl text-emerald-900 shadow-xl">
+                                    <h3 class="text-2xl font-bold mb-4 flex items-center">🔍 ฐานข้อมูลมีชีวิต</h3>
+                                    <p class="mb-4">เข้าถึงข้อมูลพรรณไม้และสัตว์ได้ทันทีผ่าน QR Code บนป้ายสื่อความหมาย ระบบ Information Management ช่วยให้ผู้เยี่ยมชมเข้าใจสิ่งที่เห็นตรงหน้าได้ลึกซึ้งยิ่งขึ้น</p>
+                                    <ul class="space-y-2 text-sm">
+                                        <li class="flex items-center">✓ ชื่อวิทยาศาสตร์และข้อมูลทางพฤกษศาสตร์</li>
+                                        <li class="flex items-center">✓ พฤติกรรมสัตว์และวงจรชีวิต</li>
+                                        <li class="flex items-center">✓ ประโยชน์และการใช้สอย</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 5: Species Database -->
+    <section id="database" class="py-16 px-4 bg-stone-50">
+        <div class="max-w-6xl mx-auto">
+            <div class="mb-8 flex flex-col md:flex-row justify-between items-end">
+                <div class="mb-4 md:mb-0 text-center md:text-left">
+                    <h2 class="text-2xl font-bold text-slate-900">พันธุ์ไม้ป่าชายเลน&สัตวชาติในเขตป่าชายเลน</h2>
+                    <p class="text-slate-500 text-sm">ข้อมูลสิ่งมีชีวิตและพรรณไม้ที่ร่วมกันสร้างระบบนิเวศป่าโกงกาง ม.อ.ปัตตานี ให้สมบูรณ์</p>
+                </div>
+                <div class="flex space-x-2">
+                    <button onclick="filterDatabase('all')" class="px-4 py-2 bg-slate-200 rounded-lg text-sm font-medium hover:bg-slate-300 transition focus:ring-2 focus:ring-slate-400 db-filter active-filter">ทั้งหมด</button>
+                    <button onclick="filterDatabase('plant')" class="px-4 py-2 bg-white border border-slate-200 rounded-lg text-sm font-medium hover:bg-emerald-50 hover:text-emerald-600 transition focus:ring-2 focus:ring-emerald-400 db-filter">พืช</button>
+                    <button onclick="filterDatabase('animal')" class="px-4 py-2 bg-white border border-slate-200 rounded-lg text-sm font-medium hover:bg-orange-50 hover:text-orange-600 transition focus:ring-2 focus:ring-orange-400 db-filter">สัตว์</button>
+                </div>
+            </div>
+
+            <div id="databaseGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Items injected by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Section: Feedback Form -->
+    <section id="feedback" class="py-20 px-4 bg-white border-t border-stone-100">
+        <div class="max-w-3xl mx-auto">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold text-slate-900 mb-3">ความคิดเห็นและข้อเสนอแนะ</h2>
+                <p class="text-slate-500 italic">"เสียงของคุณมีความหมายต่อการพัฒนาป่าในเมืองของเรา"</p>
+            </div>
+
+            <form id="commentForm" class="bg-stone-50 p-8 md:p-10 rounded-3xl border border-stone-200 shadow-inner">
+                <div class="grid md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-2">ชื่อ-นามสกุล / ชื่อเล่น</label>
+                        <input type="text" name="name" required placeholder="ระบุชื่อของคุณ" class="w-full px-4 py-3 rounded-xl border border-stone-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-2">อีเมล (เพื่อการติดต่อกลับ)</label>
+                        <input type="email" name="email" placeholder="example@email.com" class="w-full px-4 py-3 rounded-xl border border-stone-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all">
+                    </div>
+                </div>
+                <div class="mb-6">
+                    <label class="block text-sm font-bold text-slate-700 mb-2">ความคิดเห็นหรือข้อเสนอแนะ</label>
+                    <textarea name="comment" required rows="4" placeholder="พิมพ์ข้อความของคุณที่นี่..." class="w-full px-4 py-3 rounded-xl border border-stone-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all resize-none"></textarea>
+                </div>
+                <div class="text-center">
+                    <button type="submit" id="submitBtn" class="bg-emerald-700 hover:bg-emerald-800 text-white px-10 py-3 rounded-full font-bold shadow-lg transition-all transform hover:scale-105 active:scale-95 disabled:opacity-50">
+                        ส่งความคิดเห็น
+                    </button>
+                </div>
+                
+                <div id="successMsg" class="hidden mt-6 p-4 bg-emerald-100 border border-emerald-200 text-emerald-800 rounded-xl text-center fade-in">
+                    <span class="font-bold">✓ ขอบคุณสำหรับความคิดเห็น!</span> ข้อมูลของคุณถูกส่งไปยังระบบแล้ว
+                </div>
+                <div id="errorMsg" class="hidden mt-6 p-4 bg-rose-100 border border-rose-200 text-rose-800 rounded-xl text-center fade-in">
+                    <span class="font-bold">✕ เกิดข้อผิดพลาด!</span> กรุณาลองใหม่อีกครั้ง
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-12 px-4 border-t border-slate-800">
+        <div class="max-w-4xl mx-auto text-center">
+            <h3 class="text-white text-lg font-bold mb-4">โครงการป่าในเมือง มหาวิทยาลัยสงขลานครินทร์ วิทยาเขตปัตตานี</h3>
+            <p class="mb-8 max-w-lg mx-auto text-sm">
+                ร่วมสร้างจิตสำนึกในการดูแลรักษาทรัพยากรธรรมชาติ และเรียนรู้ผ่านระบบสารสนเทศเพื่อความยั่งยืน
+            </p>
+            <div class="flex justify-center space-x-4 mb-8">
+                <div class="w-12 h-12 bg-white rounded flex items-center justify-center text-slate-900 font-bold text-xs">QR</div>
+            </div>
+            <p class="text-xs text-slate-600">&copy; 2026 PSU Pattani Campus. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // --- Data & State ---
+        const connectionData = {
+            sea: { title: "ทะเล: แหล่งกำเนิดชีวิต", content: "น้ำทะเลนำพาแร่ธาตุและสารอาหารเข้ามาสู่ป่าโกงกาง ในขณะเดียวกันก็พัดพาตะกอนดินมาทับถมสร้างแผ่นดินใหม่ แต่ปัจจุบันน้ำทะเลยังพัดพา 'ขยะ' เข้ามาเป็นภัยคุกคามด้วย", icon: "🌊", color: "text-cyan-600" },
+            plant: { title: "พืช: ผู้ผลิตและผู้ปกป้อง", content: "ต้นโกงกางและพรรณไม้ชายเลนมีรากที่ซับซ้อน ช่วยยึดหน้าดิน ป้องกันการกัดเซาะ และทำหน้าที่เป็นเครื่องกรองน้ำธรรมชาติ รากอากาศยังช่วยให้พืชหายใจในดินเลนได้", icon: "🌿", color: "text-emerald-600" },
+            animal: { title: "สัตว์: ผู้รักษาสมดุล", content: "ปู ปลา และกุ้ง อาศัยรากโกงกางเป็นแหล่งอนุบาล สัตว์หน้าดินอย่างปูแสมช่วยพรวนดินและกินเศษซากพืช ทำให้เกิดการหมุนเวียนธาตุอาหารในระบบนิเวศ", icon: "🦀", color: "text-orange-600" }
+        };
+
+        const threatData = {
+            1: { title: "ขยะทะเล (Marine Debris)", desc: "ขยะพลาสติกและโฟมถูกพัดพาจากทะเลเข้ามาติดค้างในป่าโกงกางเมื่อน้ำขึ้น และตกค้างเมื่อน้ำลง", color: "text-slate-600" },
+            2: { title: "รากอุดตัน (Root Blockage)", desc: "ขยะขนาดใหญ่พันเกี่ยวรากหายใจ (Pneumatophores) ทำให้พืชสังเคราะห์แสงและหายใจไม่ได้ ส่งผลให้ต้นไม้แคระแกร็นหรือตาย", color: "text-amber-600" },
+            3: { title: "สารพิษ & ไมโครพลาสติก", desc: "เมื่อขยะแตกตัวเป็นไมโครพลาสติก สัตว์น้ำขนาดเล็กจะกินเข้าไปเพราะเข้าใจว่าเป็นอาหาร สารพิษเริ่มสะสมในห่วงโซ่อาหาร", color: "text-orange-600" },
+            4: { title: "ผลกระทบสู่มนุษย์", desc: "มนุษย์บริโภคอาหารทะเลที่มีการปนเปื้อน ส่งผลต่อสุขภาพ และทัศนียภาพที่เสื่อมโทรมส่งผลต่อคุณภาพชีวิตและเศรษฐกิจชุมชน", color: "text-rose-600" }
+        };
+
+        const databaseItems = [
+            { id: 1, type: 'plant', name: 'โกงกางใบใหญ่', sci: 'Rhizophora mucronata', icon: '🌳', desc: 'ไม้ต้นขนาดใหญ่ มีรากค้ำยันแตกแขนงระเกะระกะ ใบเดี่ยวรูปรี แผ่นใบหนา' },
+            { id: 2, type: 'plant', name: 'แสมดำ', sci: 'Avicennia officinalis', icon: '🌱', desc: 'รากหายใจเป็นแท่งโผล่พ้นดิน มีต่อมเกลือที่ใบช่วยขับเกลือออก พบได้ทั้งหาดทรายและหาดเลน' },
+            { id: 3, type: 'plant', name: 'โปรงแดง', sci: 'Ceriops tagal', icon: '🌿', desc: 'ลำต้นตรง มีรากค้ำยันสั้น กิ่งโป่งพองตามข้อชัดเจน เมล็ดงอกตั้งแต่อยู่บนต้น' },
+            { id: 4, type: 'plant', name: 'พืชล้มลุกริมน้ำ', sci: 'Typha / Hydrocotyle', icon: '🌾', desc: 'เช่น แว่นแก้ว ธูปฤาษี ช่วยปรับปรุงคุณภาพน้ำ ป้องกันตลิ่งพัง และเป็นที่อยู่ของสัตว์เล็ก' },
+            { id: 5, type: 'animal', name: 'ปลาตีน', sci: 'Periophthalmus', icon: '🐟', desc: 'ตาโปนมองเห็นได้ดีบนบก ใช้ครีบอกคลานบนเลน มีอวัยวะพิเศษเก็บความชุ่มชื้นข้างเหงือก' },
+            { id: 6, type: 'animal', name: 'ปูแสม', sci: 'Sesarma mederi', icon: '🦀', desc: 'กระดองสี่เหลี่ยมคางหมู หดก้านตาเก็บในเบ้าได้ กินซากพืชและช่วยพรวนดินในป่าชายเลน' },
+            { id: 7, type: 'animal', name: 'นกกระสา', sci: 'Ardea alba', icon: '🦢', desc: 'ปากสีเหลือง ปลายปากโค้งเล็กน้อย ผิวหน้าแดงในช่วงผสมพันธุ์ ขาสีเทาหรือดำ' },
+            { id: 8, type: 'animal', name: 'นกกินเปี้ยว', sci: 'Todiramphus chloris', icon: '🐦', desc: 'ตัวสีเขียวแกมฟ้า อกขาว ปากใหญ่แข็งแรง ชอบขุดรูในโพรงดินหรือรังปลวกเพื่อทำรัง' },
+            { id: 9, type: 'animal', name: 'นกเอี้ยง', sci: 'Acridotheres', icon: '🐥', desc: 'ขนลำตัวดำ ตาน้ำตาลแดง ปากเหลือง มีหงอนยาวที่หน้าผาก มีแถบขาวที่ปีกเห็นชัดขณะบิน' }
+        ];
+
+        // --- Core Functions ---
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function updateConnection(key) {
+            const data = connectionData[key];
+            const display = document.getElementById('connectionDetail');
+            display.style.opacity = '0.5';
+            setTimeout(() => {
+                display.innerHTML = `<div class="fade-in"><div class="text-5xl mb-4">${data.icon}</div><h3 class="text-2xl font-bold ${data.color} mb-3">${data.title}</h3><p class="text-slate-700 leading-relaxed max-w-2xl mx-auto">${data.content}</p></div>`;
+                display.style.opacity = '1';
+            }, 150);
+        }
+
+        function showThreat(step) {
+            const data = threatData[step];
+            const display = document.getElementById('threatDisplay');
+            display.innerHTML = `<div class="fade-in"><h4 class="text-xl font-bold ${data.color} mb-2 flex items-center"><span class="mr-2 border rounded-full w-6 h-6 flex items-center justify-center text-xs border-current">${step}</span> ${data.title}</h4><p class="text-slate-700">${data.desc}</p></div>`;
+        }
+
+        function switchSolution(type) {
+            const isPhys = type === 'physical';
+            document.getElementById('btn-physical').className = isPhys ? 'py-3 rounded-2xl text-sm font-bold transition-all bg-emerald-500 text-white shadow-lg' : 'py-3 rounded-2xl text-sm font-bold transition-all text-emerald-200 hover:bg-white/5';
+            document.getElementById('btn-digital').className = !isPhys ? 'py-3 rounded-2xl text-sm font-bold transition-all bg-emerald-500 text-white shadow-lg' : 'py-3 rounded-2xl text-sm font-bold transition-all text-emerald-200 hover:bg-white/5';
+            document.getElementById('content-physical').classList.toggle('hidden', !isPhys);
+            document.getElementById('content-digital').classList.toggle('hidden', isPhys);
+        }
+
+        function renderDatabase(filterType) {
+            const grid = document.getElementById('databaseGrid');
+            grid.innerHTML = '';
+            const filtered = filterType === 'all' ? databaseItems : databaseItems.filter(item => item.type === filterType);
+            filtered.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'bg-white p-5 rounded-xl shadow-sm border border-slate-100 hover:shadow-md transition group';
+                card.innerHTML = `<div class="text-4xl mb-3 group-hover:scale-110 transition-transform origin-left">${item.icon}</div><h4 class="font-bold text-slate-800">${item.name}</h4><p class="text-xs text-slate-400 italic mb-2">${item.sci}</p><p class="text-sm text-slate-600 line-clamp-3">${item.desc}</p>`;
+                grid.appendChild(card);
+            });
+        }
+
+        function filterDatabase(type) {
+            document.querySelectorAll('.db-filter').forEach(btn => {
+                const isMatch = btn.textContent.includes(type === 'all' ? 'ทั้งหมด' : type === 'plant' ? 'พืช' : 'สัตว์');
+                btn.className = isMatch ? 'px-4 py-2 bg-slate-200 rounded-lg text-sm font-medium transition db-filter active-filter' : 'px-4 py-2 bg-white border border-slate-200 rounded-lg text-sm font-medium transition db-filter';
+            });
+            renderDatabase(type);
+        }
+
+        // --- Feedback Submission Handling (Google Sheets) ---
+        document.getElementById('commentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            const success = document.getElementById('successMsg');
+            const error = document.getElementById('errorMsg');
+            
+            // ลิงก์ที่ได้รับจาก Google Apps Script ที่คุณส่งมา
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbx3WjrFaZfZVYQ9X2hCx4X2MXl9Ali4Dv4_Egr3Wo04RsqkEG-NmPr7qOJaQRV3xA/exec';
+            
+            btn.disabled = true;
+            btn.textContent = 'กำลังส่ง...';
+            success.classList.add('hidden');
+            error.classList.add('hidden');
+            
+            // สร้าง FormData เพื่อส่งข้อมูล
+            const formData = new FormData(this);
+            
+            fetch(scriptURL, { 
+                method: 'POST', 
+                body: formData
+            })
+            .then(response => {
+                if(response.ok) {
+                    btn.textContent = 'ส่งสำเร็จ';
+                    success.classList.remove('hidden');
+                    this.reset();
+                    setTimeout(() => {
+                        btn.disabled = false;
+                        btn.textContent = 'ส่งความคิดเห็น';
+                        success.classList.add('hidden');
+                    }, 5000);
+                } else {
+                    throw new Error('Server response not ok');
+                }
+            })
+            .catch(err => {
+                console.error('Error!', err.message);
+                btn.disabled = false;
+                btn.textContent = 'ส่งความคิดเห็น';
+                error.classList.remove('hidden');
+            });
+        });
+
+        // --- Chart Initialization ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const ctx = document.getElementById('ecosystemRadarChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['แหล่งอนุบาลสัตว์', 'การบำบัดน้ำ', 'ป้องกันชายฝั่ง', 'แหล่งอาหาร', 'ความหลากหลาย'],
+                    datasets: [{ data: [9, 8, 9, 7, 8], backgroundColor: 'rgba(16, 185, 129, 0.2)', borderColor: 'rgba(4, 120, 87, 1)', pointBackgroundColor: 'rgba(4, 120, 87, 1)', borderWidth: 2 }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: { r: { suggestedMin: 0, suggestedMax: 10, ticks: { display: false }, pointLabels: { font: { size: 12, family: 'Sarabun' }, color: '#475569' } } },
+                    plugins: { legend: { display: false } }
+                }
+            });
+
+            updateConnection('sea');
+            showThreat(1);
+            renderDatabase('all');
+        });
+
+    </script>
+</body>
+</html>
